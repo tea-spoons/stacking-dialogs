@@ -23,6 +23,34 @@ Originally developed at Bigpoint. Published here with Bigpoint's permission for 
 - [x] Tag and publish `v0.18.0` with the Release workflow.
 - [ ] Make installs resolve dependencies automatically, for example through a registry such as OpenUPM.
 - [ ] Look at two things noticed while reading the code: `DialogSpace.OnDisable` compares with `=` instead of `==` (it clears the default space whenever any space is disabled), and with UniTask `CloseAll` seems to raise `RemovedLast` twice.
+<!-- review-items:start -->
+- [ ] **P0** Fix the `=` versus `==` bug in `DialogSpace.OnDisable` and the double `RemovedLast`, each with a regression test (existing item, now split and prioritized).
+- [ ] **P1** Make `unitask-toolbox` and `addressables-toolbox` optional. That would also let the package install without package-core, which today arrives through addressables-toolbox.
+- [ ] **P1** Declares `unity: 6000.0`, but only Unity 6000.3.8f1 was tested. Add a Unity version matrix to CI once package tests run there (see the `unity-ci-kit` plan), or raise the minimum.
+- [ ] **P1** Run the tests in CI. The kit's `run-tests` needs a Unity project, so this waits for package-mode support in `unity-ci-kit` (planned there; GameCI's test runner has a `packageMode` for the same reason).
+- [ ] **P2** Route the messages through a small `Conditional` wrapper (as `ams` does), so release builds do not carry them.
+- [ ] **P2** Document the difference between stacking and non-stacking spaces with a sequence diagram, and describe the samples in a README.
+- [ ] **P2** Add a `CHANGELOG.md`. Unity's package layout lists one next to `README.md`, and the `unity-ci-kit` validator warns without it.
+<!-- review-items:end -->
+
+<!-- review:start -->
+## Review (September 2026)
+
+Reviewed as a senior Unity engineer would: I read the code and compared the package with similar open-source projects (September 2026). Those projects are listed for ideas only. Nothing was copied from them, and their licenses are noted in case code is ever reused. Priorities: **P0** correctness bug or broken metadata, **P1** should be done soon, **P2** nice to have.
+
+### Compared with
+
+| Project | License | Worth noting |
+|---|---|---|
+| [Unity UI Extensions (uGUI)](https://github.com/Unity-UI-Extensions/com.unity.uiextensions) | BSD-3-Clause (uGUI package) | A large catalogue of uGUI controls. No dialog-stack comparable turned up in this pass. |
+
+### Findings from reading the code
+
+- **[Bug]** `DialogSpace.OnDisable` uses `if (DefaultSpace = this)` (an assignment, not a comparison), so disabling any space clears the default space. This is already in the plan; it is a P0 because it changes behavior in normal use.
+- **[Bug]** With UniTask, `CloseAll` seems to raise `RemovedLast` twice (already in the plan).
+- **[Coupling]** It still declares `unitask-toolbox` and `addressables-toolbox`, although the package already has a synchronous path without UniTask and compiles the Addressables-backed `DialogReference` out when the packages are missing.
+- **[Logging]** Four direct `Debug.Log*` calls in the runtime code. Logging is now an optional dependency elsewhere in the library, so the same pattern can be used here.
+<!-- review:end -->
 
 ## Notes and ideas
 
