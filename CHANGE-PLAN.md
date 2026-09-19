@@ -20,7 +20,7 @@ Originally developed at Bigpoint. Published here with Bigpoint's permission for 
 ## Planned changes
 
 - [x] Tag and publish `v0.17.1` with the Release workflow.
-- [ ] Tag and publish `v0.18.0` with the Release workflow.
+- [x] Tag and publish `v0.18.0` with the Release workflow.
 - [ ] Make installs resolve dependencies automatically, for example through a registry such as OpenUPM.
 - [ ] Look at two things noticed while reading the code: `DialogSpace.OnDisable` compares with `=` instead of `==` (it clears the default space whenever any space is disabled), and with UniTask `CloseAll` seems to raise `RemovedLast` twice.
 
