@@ -138,7 +138,7 @@ In Unity: **Window > Package Manager > + > Add package from git URL**, then ente
 https://github.com/tea-spoons/stacking-dialogs.git
 ```
 
-Pin a release by appending a tag, for example `#v0.17.0`.
+Pin a release by appending a tag, for example `#v0.17.1`.
 
 ### Dependencies
 

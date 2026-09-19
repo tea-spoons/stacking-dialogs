@@ -14,10 +14,11 @@ Originally developed at Bigpoint. Published here with Bigpoint's permission for 
 - The samples folder now uses Unity's hidden `Samples~` layout and is registered in `package.json`.
 - Declared the missing dependency on `addressables-toolbox`.
 - Made standalone: no longer declares UniTask as a dependency. Without UniTask a second, synchronous path instantiates prefabs and shows or hides dialogs immediately (no animations). Added PlayMode tests that run in both modes.
+- Restored the `.meta` files inside `Samples~`: the first migration dropped them, which breaks the links between sample assets when a sample is imported.
 
 ## Planned changes
 
-- [ ] Tag and publish `v0.17.0` with the Release workflow.
+- [ ] Tag and publish `v0.17.1` with the Release workflow.
 - [ ] Make installs resolve dependencies automatically, for example through a registry such as OpenUPM.
 - [ ] Look at two things noticed while reading the code: `DialogSpace.OnDisable` compares with `=` instead of `==` (it clears the default space whenever any space is disabled), and with UniTask `CloseAll` seems to raise `RemovedLast` twice.
 

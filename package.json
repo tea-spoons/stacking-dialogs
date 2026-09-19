@@ -1,6 +1,6 @@
 {
   "name": "com.tea-spoons.stacking-dialogs",
-  "version": "0.17.0",
+  "version": "0.17.1",
   "displayName": "Stacking Dialogs",
   "description": "A lightweight, UGUI-based dialog system.",
   "unity": "6000.0",
