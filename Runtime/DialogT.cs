@@ -2,7 +2,9 @@
 namespace TeaSpoons.StackingDialogs
 {
     using UnityEngine;
+#if UNITASK
     using Cysharp.Threading.Tasks;
+#endif
     using System;
 
     /// <summary>
@@ -33,7 +35,11 @@ namespace TeaSpoons.StackingDialogs
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="space"/> is <c>null</c>.</exception>
         public void InstantiateAndOpen(T parameter)
         {
+#if UNITASK
             InstantiateAndOpenAsync(parameter).Forget();
+#else
+            InstantiateAndOpen(parameter, GetDefaultDialogSpace());
+#endif
         }
 
         /// <summary>
@@ -42,7 +48,15 @@ namespace TeaSpoons.StackingDialogs
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="space"/> is <c>null</c>.</exception>
         public void InstantiateAndOpen(T parameter, DialogSpace space)
         {
+#if UNITASK
             InstantiateAndOpenAsync(parameter, space).Forget();
+#else
+            var instance = (DialogT<T>)InstantiateInSpace(space);
+            instance.CurrentParameter = parameter;
+            instance.OnCreatedInternal();
+
+            space.Add(instance);
+#endif
         }
 
         /// <summary>
@@ -51,9 +65,16 @@ namespace TeaSpoons.StackingDialogs
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="spaceId"/> is <c>null</c>, or no space is registered to it.</exception>
         public void InstantiateAndOpen(T parameter, DialogSpaceId spaceId)
         {
+#if UNITASK
             InstantiateAndOpenAsync(parameter, spaceId).Forget();
+#else
+            if (!spaceId) throw new ArgumentNullException(nameof(spaceId));
+
+            InstantiateAndOpen(parameter, spaceId.DialogSpace);
+#endif
         }
 
+#if UNITASK
         /// <summary>
         /// Instantiate this prefab and add it to a default <see cref="DialogSpace"/>.<br/>
         /// That's either the space registered with the referenced <see cref="DialogSpaceId"/>, or the <see cref="DialogSpace.DefaultSpace"/>.
@@ -99,6 +120,8 @@ namespace TeaSpoons.StackingDialogs
                 throw;
             }
         }
+
+#endif
 
         public void UpdateParameter(T parameter)
         {

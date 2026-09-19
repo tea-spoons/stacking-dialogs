@@ -7,8 +7,10 @@ namespace TeaSpoons.StackingDialogs
 {
     using UnityEngine;
     using UnityEngine.UI;
+#if UNITASK
     using Cysharp.Threading.Tasks;
     using System.Threading;
+#endif
     using System;
 
     /// <summary>
@@ -67,7 +69,9 @@ namespace TeaSpoons.StackingDialogs
 
         private RectTransform rectTransform => (RectTransform)transform;
 
+#if UNITASK
         private bool isHidingInProcess = false;
+#endif
 
         protected virtual void Awake()
         {
@@ -88,16 +92,22 @@ namespace TeaSpoons.StackingDialogs
             {
                 gameObject.SetActive(false);
 
+#if UNITASK
                 ParentSpace?.AddAsync(this).Forget();
+#else
+                ParentSpace?.Add(this);
+#endif
 
                 OnCreatedInternal();
             }
         }
 
+#if UNITASK
         public async UniTask WaitUntilInteractionsEnabled()
         {
             await UniTask.WaitUntil(() => AreInteractionsEnabled, cancellationToken: destroyCancellationToken);
         }
+#endif
 
         /// <summary>
         /// Creates the raycast blocker GameObject.
@@ -143,9 +153,24 @@ namespace TeaSpoons.StackingDialogs
         /// </summary>
         public void Close()
         {
+#if UNITASK
             CloseAsync().Forget();
+#else
+            if (closed) return;
+
+            closed = true;
+            OnClose();
+
+            if (ParentSpace)
+            {
+                ParentSpace.Remove(this);
+            }
+
+            Destroy();
+#endif
         }
 
+#if UNITASK
         /// <summary>
         /// Closes the dialog and informs its <see cref="DialogSpace"/> about it, so another dialog might be re-enabled.
         /// </summary>
@@ -163,6 +188,7 @@ namespace TeaSpoons.StackingDialogs
 
             Destroy();
         }
+#endif
 
         internal virtual void OnCreatedInternal()
         {
@@ -196,6 +222,7 @@ namespace TeaSpoons.StackingDialogs
         /// This allows you to manually define when to open the dialog, and what to do before that.
         /// </remarks>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="space"/> is <c>null</c>.</exception>
+#if UNITASK
         protected async UniTask<DialogBase> InstantiateAsync(DialogSpace space)
         {
             if (!space) throw new ArgumentNullException(nameof(space));
@@ -220,6 +247,21 @@ namespace TeaSpoons.StackingDialogs
 
             return instance;
         }
+#else
+        protected DialogBase InstantiateInSpace(DialogSpace space)
+        {
+            if (!space) throw new ArgumentNullException(nameof(space));
+
+            space.PrepareForDialog();
+
+            var instance = Instantiate(this, space.Transform);
+            instance.wasManuallyAdded = false;
+
+            instance.gameObject.SetActive(false);
+
+            return instance;
+        }
+#endif
 
         internal void Destroy()
         {
@@ -265,6 +307,7 @@ namespace TeaSpoons.StackingDialogs
             return space;
         }
 
+#if UNITASK
         internal async UniTask ShowAsync(CancellationToken cancel, DialogAnimation animation = null)
         {
             gameObject.SetActive(true);
@@ -312,6 +355,24 @@ namespace TeaSpoons.StackingDialogs
 
             isHidingInProcess = false;
         }
+
+#else
+        internal void Show()
+        {
+            gameObject.SetActive(true);
+            EnableInteractions();
+        }
+
+        internal void Hide()
+        {
+            DisableInteractions();
+
+            if (this && gameObject)
+            {
+                gameObject.SetActive(false);
+            }
+        }
+#endif
 
         internal void EnableInteractions()
         {

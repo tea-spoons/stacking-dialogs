@@ -1,11 +1,10 @@
 {
   "name": "com.tea-spoons.stacking-dialogs",
-  "version": "0.16.0",
+  "version": "0.17.0",
   "displayName": "Stacking Dialogs",
   "description": "A lightweight, UGUI-based dialog system.",
   "unity": "6000.0",
   "dependencies": {
-    "com.cysharp.unitask": "2.5.0",
     "com.tea-spoons.unitask-toolbox": "0.7.1",
     "com.tea-spoons.package-core": "1.4.0",
     "com.tea-spoons.addressables-toolbox": "0.5.0"

@@ -2,8 +2,10 @@
 namespace TeaSpoons.StackingDialogs
 {
     using TeaSpoons.PackageCore;
+#if UNITASK
     using TeaSpoons.UniTaskToolbox;
     using Cysharp.Threading.Tasks;
+#endif
     using UnityEngine;
     using System;
     using System.Collections.Generic;
@@ -49,8 +51,10 @@ namespace TeaSpoons.StackingDialogs
             remove => RemovedLast -= value;
         }
 
+#if UNITASK
         public DialogAnimation ShowAnimation = null;
         public DialogAnimation HideAnimation = null;
+#endif
 
         public bool HasDialogs => stack.Count > 0;
 
@@ -58,7 +62,9 @@ namespace TeaSpoons.StackingDialogs
         private DialogBase topmostDialog => stack[stack.Count - 1];
         private bool expectsDialog = false;
 
+#if UNITASK
         private readonly ReusableCancelSource animationCancellation = new();
+#endif
 
         private void Awake()
         {
@@ -67,7 +73,8 @@ namespace TeaSpoons.StackingDialogs
 
         private void OnEnable()
         {
-            RegisterToSpaceId(spaceId.Value);
+            // spaceId is only created by serialization, so a space added from code has none.
+            RegisterToSpaceId(spaceId?.Value);
 
             if (isDefaultSpace)
             {
@@ -75,21 +82,21 @@ namespace TeaSpoons.StackingDialogs
             }
 
 #if UNITY_EDITOR
-            spaceId.OnUpdate += OnUpdateSpaceId;
+            if (spaceId != null) spaceId.OnUpdate += OnUpdateSpaceId;
             isDefaultSpace.OnUpdate += OnUpdateIsDefaultSpace;
 #endif
         }
 
         private void OnDisable()
         {
-            spaceId.Value?.UnsetDialogSpace(this);
+            spaceId?.Value?.UnsetDialogSpace(this);
             if (DefaultSpace = this)
             {
                 DefaultSpace = null;
             }
 
 #if UNITY_EDITOR
-            spaceId.OnUpdate -= OnUpdateSpaceId;
+            if (spaceId != null) spaceId.OnUpdate -= OnUpdateSpaceId;
             isDefaultSpace.OnUpdate -= OnUpdateIsDefaultSpace;
 #endif
         }
@@ -99,9 +106,23 @@ namespace TeaSpoons.StackingDialogs
         /// </summary>
         public void CloseAll()
         {
+#if UNITASK
             CloseAllAsync().Forget();
+#else
+            if (!HasDialogs) return;
+
+            while (stack.Count > 1)
+            {
+                stack[0].Destroy();
+                stack.RemoveAt(0);
+            }
+
+            // Closing the last dialog raises RemovedLast.
+            topmostDialog.Close();
+#endif
         }
 
+#if UNITASK
         /// <summary>
         /// Closes all dialogs.
         /// </summary>
@@ -121,6 +142,7 @@ namespace TeaSpoons.StackingDialogs
 
             RemovedLast();
         }
+#endif
 
         /// <summary>
         /// Closes only the topmost (currently visible) dialog.
@@ -128,9 +150,16 @@ namespace TeaSpoons.StackingDialogs
         /// </summary>
         public void CloseTopmost()
         {
+#if UNITASK
             CloseTopmostAsync().Forget();
+#else
+            if (!HasDialogs) return;
+
+            topmostDialog.Close();
+#endif
         }
 
+#if UNITASK
         /// <summary>
         /// Closes only the topmost (currently visible) dialog.
         /// If another dialog is below it on the stack, that dialog is re-revealed.
@@ -144,6 +173,7 @@ namespace TeaSpoons.StackingDialogs
             // (or fires RemovedLast when the stack becomes empty).
             await topmostDialog.CloseAsync();
         }
+#endif
 
         /// <summary>
         /// Makes the stack act like it's getting a dialog added to it, but that dialog might still be loading.
@@ -162,6 +192,7 @@ namespace TeaSpoons.StackingDialogs
             expectsDialog = true;
         }
 
+#if UNITASK
         /// <summary>
         /// Adds the given <paramref name="dialog"/> to the stack.
         /// Hides whatever dialog is currently visible and shows the new one.
@@ -252,9 +283,79 @@ namespace TeaSpoons.StackingDialogs
             }
         }
 
+#else
+        /// <summary>
+        /// Adds the given <paramref name="dialog"/> to the stack. Hides the dialog that is currently visible and shows the new one.
+        /// </summary>
+        internal void Add(DialogBase dialog)
+        {
+            if (isStacking)
+            {
+                var isFirstDialog = !HasDialogs;
+                var previousTopmostDialog = isFirstDialog ? null : topmostDialog;
+
+                var dialogWasExpected = expectsDialog;
+                expectsDialog = false;
+
+                stack.Add(dialog);
+
+                if (isFirstDialog)
+                {
+                    if (!dialogWasExpected)
+                    {
+                        OpeningFirst();
+                    }
+                }
+                else
+                {
+                    previousTopmostDialog.Hide();
+                }
+            }
+
+            dialog.Show();
+        }
+
+        /// <summary>
+        /// Removes the given <paramref name="dialog"/> from the stack. If it was the visible one, the dialog below it is shown again.
+        /// </summary>
+        internal void Remove(DialogBase dialog)
+        {
+            if (!isStacking)
+            {
+                dialog.Hide();
+                return;
+            }
+
+            var dialogIndex = stack.IndexOf(dialog);
+            if (dialogIndex < 0)
+            {
+                return;
+            }
+
+            var closedDialogWasTopmost = dialogIndex == stack.Count - 1;
+            if (closedDialogWasTopmost)
+            {
+                dialog.Hide();
+            }
+
+            stack.RemoveAt(dialogIndex);
+
+            if (closedDialogWasTopmost && HasDialogs)
+            {
+                topmostDialog.Show();
+            }
+            else if (!HasDialogs)
+            {
+                RemovedLast();
+            }
+        }
+#endif
+
         private void OnDestroy()
         {
+#if UNITASK
             animationCancellation.Dispose();
+#endif
 
             if (this == DefaultSpace)
             {

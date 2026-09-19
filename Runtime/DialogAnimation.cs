@@ -1,3 +1,4 @@
+#if UNITASK
 
 namespace TeaSpoons.StackingDialogs
 {
@@ -6,3 +7,4 @@ namespace TeaSpoons.StackingDialogs
 
     public delegate UniTask DialogAnimation(DialogBase dialog, CancellationToken cancel);
 }
+#endif

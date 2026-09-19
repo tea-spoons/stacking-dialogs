@@ -138,7 +138,7 @@ In Unity: **Window > Package Manager > + > Add package from git URL**, then ente
 https://github.com/tea-spoons/stacking-dialogs.git
 ```
 
-Pin a release by appending a tag, for example `#v0.16.0`.
+Pin a release by appending a tag, for example `#v0.17.0`.
 
 ### Dependencies
 
@@ -148,6 +148,16 @@ Unity cannot resolve git dependencies automatically, so add these to your projec
 - `com.tea-spoons.unitask-toolbox` 0.7.1
 - `com.tea-spoons.package-core` 1.4.0
 - `com.tea-spoons.addressables-toolbox` 0.5.0
+
+## Optional packages
+
+This package works on its own. It uses the packages below when your project has them (Unity detects them automatically) and simply leaves the related code out when it does not.
+
+| Package | Used for |
+|---|---|
+| uGUI (`com.unity.ugui`) | The package itself (dialogs are uGUI based). Without it nothing is compiled. |
+| UniTask (`com.cysharp.unitask` 2.5.0+) | Animated dialogs: `DialogAnimation`, the `*Async` methods and animated show/hide. **Without UniTask dialogs are instantiated and shown or hidden immediately**; `InstantiateAndOpen`, `Close`, `CloseAll` and `CloseTopmost` work the same way, just without animations. |
+| Addressables (`com.unity.addressables` 2.2.2+) and UniTask | `DialogReference` and `DialogTReference`, which load dialog prefabs through Addressables. |
 
 ## Change plan
 

@@ -1,3 +1,4 @@
+#if UNITASK
 
 namespace TeaSpoons.StackingDialogs
 {
@@ -10,3 +11,4 @@ namespace TeaSpoons.StackingDialogs
         public static readonly DialogAnimation None = (_, _) => UniTask.CompletedTask;
     }
 }
+#endif

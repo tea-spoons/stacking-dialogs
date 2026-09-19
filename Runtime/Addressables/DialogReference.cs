@@ -1,3 +1,4 @@
+#if ADDRESSABLES && UNITASK && ADDRESSABLES_TOOLBOX
 
 #if ADDRESSABLES
 namespace TeaSpoons.StackingDialogs
@@ -74,4 +75,5 @@ namespace TeaSpoons.StackingDialogs
         }
     }
 }
+#endif
 #endif
