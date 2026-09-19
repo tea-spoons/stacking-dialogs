@@ -138,7 +138,7 @@ In Unity: **Window > Package Manager > + > Add package from git URL**, then ente
 https://github.com/tea-spoons/stacking-dialogs.git
 ```
 
-Pin a release by appending a tag, for example `#v0.17.1`.
+Pin a release by appending a tag, for example `#v0.18.0`.
 
 ### Dependencies
 
@@ -146,7 +146,6 @@ Unity cannot resolve git dependencies automatically, so add these to your projec
 
 - `com.cysharp.unitask` 2.5.0
 - `com.tea-spoons.unitask-toolbox` 0.7.1
-- `com.tea-spoons.package-core` 1.4.0
 - `com.tea-spoons.addressables-toolbox` 0.5.0
 
 ## Optional packages
@@ -158,6 +157,7 @@ This package works on its own. It uses the packages below when your project has 
 | uGUI (`com.unity.ugui`) | The package itself (dialogs are uGUI based). Without it nothing is compiled. |
 | UniTask (`com.cysharp.unitask` 2.5.0+) | Animated dialogs: `DialogAnimation`, the `*Async` methods and animated show/hide. **Without UniTask dialogs are instantiated and shown or hidden immediately**; `InstantiateAndOpen`, `Close`, `CloseAll` and `CloseTopmost` work the same way, just without animations. |
 | Addressables (`com.unity.addressables` 2.2.2+) and UniTask | `DialogReference` and `DialogTReference`, which load dialog prefabs through Addressables. |
+| Package Core (`com.tea-spoons.package-core` 1.4.0+) | The shared `TeaSpoons/` asset menu root and the inspector helper behind the `DialogSpace` settings (`Is Default Space`, `Is Stacking`, `Space Id`). Without it the package uses small built-in equivalents: the menu is at the same place, the settings look and save the same, so existing scenes and prefabs keep working. |
 
 ## Change plan
 

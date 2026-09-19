@@ -36,6 +36,28 @@ namespace TeaSpoons.StackingDialogs.Tests
             UnityEngine.Object.Destroy(root);
         }
 
+#if UNITY_EDITOR
+        // Raises the update event of a setting the way the inspector drawer does when the value is edited in Play Mode.
+        private static void EditInInspector(DialogSpace target, string field, object previousValue, object newValue)
+        {
+            var editable = typeof(DialogSpace).GetField(field, System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).GetValue(target);
+            editable.GetType().GetMethod("InvokeOnUpdateEvent", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .Invoke(editable, new[] { previousValue, newValue });
+        }
+
+        [Test]
+        public void EditingIsDefaultSpaceInTheInspectorRegistersAndUnregistersTheDefaultSpace()
+        {
+            Assert.IsNull(DialogSpace.DefaultSpace);
+
+            EditInInspector(space, "isDefaultSpace", false, true);
+            Assert.AreSame(space, DialogSpace.DefaultSpace);
+
+            EditInInspector(space, "isDefaultSpace", true, false);
+            Assert.IsNull(DialogSpace.DefaultSpace);
+        }
+#endif
+
         [UnityTest]
         public IEnumerator OpeningADialogShowsItAndEnablesItsInteractions()
         {

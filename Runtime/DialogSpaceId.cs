@@ -1,7 +1,9 @@
 
 namespace TeaSpoons.StackingDialogs
 {
+#if TEASPOONS_PACKAGE_CORE
     using TeaSpoons.PackageCore;
+#endif
     using System.Collections.Generic;
     using UnityEngine;
 
@@ -9,7 +11,7 @@ namespace TeaSpoons.StackingDialogs
     /// A <see cref="ScriptableObject"/> that represents a <see cref="DialogSpace"/>.<br/>
     /// Can be used to define a target <see cref="DialogSpace"/> to open a dialog in before that space exists, for example in a prefab.
     /// </summary>
-    [CreateAssetMenu(menuName = Menus.RootItem + "Stacking Dialogs/Dialog Space Id")]
+    [CreateAssetMenu(menuName = MenuPaths.Root + "Stacking Dialogs/Dialog Space Id")]
     public class DialogSpaceId : ScriptableObject
     {
         /// <summary>

@@ -1,0 +1,31 @@
+{
+  "name": "TeaSpoons.StackingDialogs.Editor",
+  "rootNamespace": "TeaSpoons.StackingDialogs.Editor",
+  "references": [
+    "TeaSpoons.StackingDialogs"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [
+    "UGUI"
+  ],
+  "versionDefines": [
+    {
+      "name": "com.unity.ugui",
+      "expression": "1.0.0",
+      "define": "UGUI"
+    },
+    {
+      "name": "com.tea-spoons.package-core",
+      "expression": "1.4.0",
+      "define": "TEASPOONS_PACKAGE_CORE"
+    }
+  ],
+  "noEngineReferences": false
+}

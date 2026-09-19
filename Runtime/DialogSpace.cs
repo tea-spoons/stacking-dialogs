@@ -1,7 +1,9 @@
 
 namespace TeaSpoons.StackingDialogs
 {
+#if TEASPOONS_PACKAGE_CORE
     using TeaSpoons.PackageCore;
+#endif
 #if UNITASK
     using TeaSpoons.UniTaskToolbox;
     using Cysharp.Threading.Tasks;
