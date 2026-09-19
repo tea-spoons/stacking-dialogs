@@ -1,0 +1,26 @@
+{
+    "name": "TeaSpoons.StackingDialogs",
+    "rootNamespace": "TeaSpoons.StackingDialogs",
+    "references": [
+        "GUID:e5abf2f3172c688498fffe41ab22ecbf",
+        "GUID:f51ebe6a0ceec4240a699833d6309b23",
+        "GUID:593a5b492d29ac6448b1ebf7f035ef33",
+        "GUID:8da508d980990b740ae19fbce055a6b6",
+        "GUID:4f4a4ecf558a3c940b969dc842026b91"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.tea-spoons.addressables-toolbox",
+            "expression": "0.1",
+            "define": "ADDRESSABLES"
+        }
+    ],
+    "noEngineReferences": false
+}
