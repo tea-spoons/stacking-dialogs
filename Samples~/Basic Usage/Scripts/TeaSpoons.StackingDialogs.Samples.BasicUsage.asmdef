@@ -1,0 +1,16 @@
+{
+  "name": "TeaSpoons.StackingDialogs.Samples.BasicUsage",
+  "rootNamespace": "TeaSpoons.StackingDialogs.Samples",
+  "references": [
+    "TeaSpoons.StackingDialogs"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

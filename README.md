@@ -130,6 +130,13 @@ Use `DialogSpace.CloseAll` (or `DialogSpace.CloseAllAsync`) to close all dialogs
 - You can also create a `DialogSpaceId` ScriptableObject (`TeaSpoons/Stacking Dialogs/Dialog Space Id`), assign it to a `DialogSpace` and pass _that_ to the open method.
 This way, you can set up a target `DialogSpace` to open in ahead of its instantiation; for example in a prefab or ScriptableObject.
 
+## Samples
+
+Import from **Package Manager > Stacking Dialogs > Samples**:
+
+- **Basic Usage** - a plain Dialog, a yes/no Dialog that stacks a confirmation on top, and a parameterized `DialogT<int>` that can push another copy of itself. Covers dialogs, stacking and parameters through `InstantiateAndOpen` calls wired to buttons - open the scene and press Play.
+- **SampleScene** - the package author's own stacking vs. non-stacking `DialogSpace` test scene.
+
 ## Installation
 
 In Unity: **Window > Package Manager > + > Add package from git URL**, then enter:
