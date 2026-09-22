@@ -543,12 +543,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 250896783}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 553217a26e92e4ae3845274245718a00, type: 3}
+  m_Script: {fileID: 11500000, guid: 1305e7387381f4ed79c32986a0140598, type: 3}
   m_Name: 
   m_EditorClassIdentifier: TeaSpoons.StackingDialogs.Samples.BasicUsage::TeaSpoons.StackingDialogs.Samples.StackingDialogsSampleLauncher
-  infoDialogPrefab: {fileID: 1143372314915072377, guid: 5f4d6229bd4dd490696345787c9b76f2, type: 3}
-  confirmDialogPrefab: {fileID: 7917583265848725858, guid: b27071143d23049868cb2e4c89113bc2, type: 3}
-  counterDialogPrefab: {fileID: 2480160491014481780, guid: fa09919f33e764bb282e176fc615a1bd, type: 3}
+  infoDialogPrefab: {fileID: 1143372314915072377, guid: 099dcec58ca62497ba8b71212c7caee8, type: 3}
+  confirmDialogPrefab: {fileID: 7917583265848725858, guid: 17f80ba7444514a7880f3b37bca02539, type: 3}
+  counterDialogPrefab: {fileID: 2480160491014481780, guid: 3120bd1dfb9b342afa28b778ec89c082, type: 3}
 --- !u!1 &408434508
 GameObject:
   m_ObjectHideFlags: 0

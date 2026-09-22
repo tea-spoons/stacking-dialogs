@@ -181,13 +181,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1708161673970642063}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35d859411139147aa856c72049bd65a3, type: 3}
+  m_Script: {fileID: 11500000, guid: 905494526debb4de6b16ad526e296d3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: TeaSpoons.StackingDialogs.Samples.BasicUsage::TeaSpoons.StackingDialogs.Samples.ConfirmDialog
   <defaultSpaceId>k__BackingField: {fileID: 0}
   yesButton: {fileID: 5041894951283520356}
   noButton: {fileID: 8613827014141458530}
-  confirmedDialogPrefab: {fileID: 1143372314915072377, guid: 5f4d6229bd4dd490696345787c9b76f2, type: 3}
+  confirmedDialogPrefab: {fileID: 1143372314915072377, guid: 099dcec58ca62497ba8b71212c7caee8, type: 3}
 --- !u!1 &3531504126136303641
 GameObject:
   m_ObjectHideFlags: 0

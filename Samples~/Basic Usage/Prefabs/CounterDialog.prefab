@@ -102,7 +102,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2323800478701542458}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 895a441aef6b046d9a2f3583e3b796f3, type: 3}
+  m_Script: {fileID: 11500000, guid: 26eef4ba1a3504c62b55be228a0b524d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: TeaSpoons.StackingDialogs.Samples.BasicUsage::TeaSpoons.StackingDialogs.Samples.CounterDialog
   <defaultSpaceId>k__BackingField: {fileID: 0}

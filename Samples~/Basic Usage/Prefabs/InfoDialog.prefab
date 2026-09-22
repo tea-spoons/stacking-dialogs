@@ -376,7 +376,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7610765394230308987}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47e376461dbd2493faddf41ee908bd12, type: 3}
+  m_Script: {fileID: 11500000, guid: 565c3adf2238b4f61be123ad9fbeb8e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: TeaSpoons.StackingDialogs.Samples.BasicUsage::TeaSpoons.StackingDialogs.Samples.InfoDialog
   <defaultSpaceId>k__BackingField: {fileID: 0}
