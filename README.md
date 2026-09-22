@@ -134,7 +134,7 @@ This way, you can set up a target `DialogSpace` to open in ahead of its instanti
 
 Import from **Package Manager > Stacking Dialogs > Samples**:
 
-- **Basic Usage** - a plain Dialog, a yes/no Dialog that stacks a confirmation on top, and a parameterized `DialogT<int>` that can push another copy of itself. Covers dialogs, stacking and parameters through `InstantiateAndOpen` calls wired to buttons - open the scene and press Play.
+- **Basic Usage** - a plain Dialog, a yes/no Dialog that stacks a confirmation on top, and a parameterized `DialogT<int>` that can push another copy of itself. Covers dialogs, stacking and parameters through `InstantiateAndOpen` calls wired to buttons - open the scene and press Play. Styled with [Kenney's CC0 UI Pack - Adventure](https://kenney.nl/assets/ui-pack-adventure) (see `Sprites/CREDITS.md`), not bare rectangles.
 - **SampleScene** - the package author's own stacking vs. non-stacking `DialogSpace` test scene.
 
 ## Installation
